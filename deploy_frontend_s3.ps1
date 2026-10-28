@@ -38,8 +38,8 @@ $frontendDir = Join-Path $rootDir "frontend"
 $frontendEnvPath = Join-Path $frontendDir ".env"
 $rootEnvPath = Join-Path $rootDir ".env"
 
-$userPoolId = "ap-south-1_txppSeJhO"
-$clientId = "7eqigcajenecjughu2hg0dgn4q"
+$userPoolId = "ap-south-1_ZqEBACRyp"
+$clientId = "60bg7969k32cii2qq78gapg6t9"
 
 if (Test-Path $rootEnvPath) {
     Get-Content $rootEnvPath | ForEach-Object {
@@ -75,8 +75,23 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 
+# 6. Invalidate CloudFront Cache (if configured)
+$cfDistId = "E3O4URLDCZUPOP"
+$cfUrl = "https://d38vsojw3wikvs.cloudfront.net"
+
+if ($cfDistId) {
+    Write-Host "`nInvalidating CloudFront cache ($cfDistId)..." -ForegroundColor Yellow
+    try {
+        aws cloudfront create-invalidation --distribution-id $cfDistId --paths "/*" | Out-Null
+        Write-Host "  -> CloudFront cache invalidation initiated." -ForegroundColor Green
+    } catch {
+        Write-Warning "CloudFront invalidation skipped or failed."
+    }
+}
+
 $websiteUrl = "http://$bucketName.s3-website.$Region.amazonaws.com"
 Write-Host "`n=========================================" -ForegroundColor Green
 Write-Host "FRONTEND DEPLOYMENT COMPLETE!" -ForegroundColor Green
 Write-Host "=========================================" -ForegroundColor Green
-Write-Host "Live App URL: $websiteUrl" -ForegroundColor Cyan
+Write-Host "CloudFront HTTPS URL : $cfUrl" -ForegroundColor Cyan
+Write-Host "S3 Direct Website URL: $websiteUrl" -ForegroundColor Gray

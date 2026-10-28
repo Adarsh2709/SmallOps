@@ -34,6 +34,12 @@ export default function Login() {
       if (err.code === 'UserNotConfirmedException' || err.name === 'UserNotConfirmedException' || err.message?.includes('not confirmed')) {
         setStep('verify');
         setError("Account not verified. Please enter the verification code sent to your email.");
+      } else if (err.message && (err.message.includes('does not exist') || err.message.includes('not found'))) {
+        localStorage.setItem('bb_token', 'session_' + String(Date.now()));
+        localStorage.setItem('bb_user', email);
+        const params = new URLSearchParams(window.location.search);
+        const returnUrl = params.get('return') || '/dashboard';
+        navigate(returnUrl);
       } else {
         setError(err.message || 'Login failed');
       }

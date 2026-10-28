@@ -3,6 +3,12 @@
 
 Built for **Bharat Builds Tour 2026 (First Commit)** by WeMakeDevs × AWS.
 
+### 🌐 Live Production Deployment
+* **Live Web Application (CloudFront CDN):** [https://d38vsojw3wikvs.cloudfront.net](https://d38vsojw3wikvs.cloudfront.net)
+* **Sample Generated Micro-App:** [Morning Attendance System](https://wawdoi6o2gmixk4uwy3aidzfle0lwnya.lambda-url.ap-south-1.on.aws/apps/0623f82e-3deb-4fd2-b58a-b609ecd99132/live)
+* **Backend API Base:** `https://wawdoi6o2gmixk4uwy3aidzfle0lwnya.lambda-url.ap-south-1.on.aws`
+
+
 ---
 
 ## 1. The Problem

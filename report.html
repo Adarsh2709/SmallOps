@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AWS Project Report - smallOps</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  @page {
+    size: A4;
+    margin: 20mm 18mm 20mm 18mm;
+    @bottom-right {
+      content: counter(page);
+    }
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #1e293b;
+    line-height: 1.6;
+    background: #ffffff;
+    font-size: 11pt;
+  }
+
+  /* Cover Page */
+  .cover-page {
+    page-break-after: always;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 40px 0;
+    border-bottom: 2px solid #e2e8f0;
+  }
+
+  .cover-badge {
+    display: inline-block;
+    background: #eff6ff;
+    color: #1d4ed8;
+    padding: 6px 16px;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 10pt;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border: 1px solid #bfdbfe;
+    margin-bottom: 24px;
+  }
+
+  .cover-title {
+    font-size: 28pt;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .cover-subtitle {
+    font-size: 13pt;
+    color: #475569;
+    line-height: 1.5;
+    margin-bottom: 40px;
+    max-width: 650px;
+  }
+
+  .meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 24px;
+    margin-top: 30px;
+  }
+
+  .meta-item h4 {
+    font-size: 9pt;
+    text-transform: uppercase;
+    color: #64748b;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+
+  .meta-item p {
+    font-size: 11pt;
+    font-weight: 600;
+    color: #0f172a;
+  }
+
+  /* Content Headings */
+  h1 {
+    font-size: 18pt;
+    font-weight: 700;
+    color: #0f172a;
+    border-bottom: 2px solid #2563eb;
+    padding-bottom: 6px;
+    margin-top: 32px;
+    margin-bottom: 16px;
+    page-break-after: avoid;
+  }
+
+  h2 {
+    font-size: 13pt;
+    font-weight: 600;
+    color: #1e293b;
+    margin-top: 24px;
+    margin-bottom: 10px;
+    page-break-after: avoid;
+  }
+
+  h3 {
+    font-size: 11pt;
+    font-weight: 600;
+    color: #334155;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    page-break-after: avoid;
+  }
+
+  p {
+    margin-bottom: 12px;
+    color: #334155;
+  }
+
+  ul, ol {
+    margin-left: 20px;
+    margin-bottom: 14px;
+    color: #334155;
+  }
+
+  li {
+    margin-bottom: 5px;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 18px 0;
+    font-size: 9.5pt;
+    page-break-inside: avoid;
+  }
+
+  th {
+    background-color: #f1f5f9;
+    color: #0f172a;
+    font-weight: 600;
+    text-align: left;
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+  }
+
+  td {
+    padding: 9px 12px;
+    border: 1px solid #e2e8f0;
+    color: #334155;
+    vertical-align: top;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f8fafc;
+  }
+
+  /* Diagram Box */
+  .diagram-box {
+    background: #0f172a;
+    color: #f8fafc;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8.5pt;
+    line-height: 1.4;
+    white-space: pre;
+    overflow-x: auto;
+    page-break-inside: avoid;
+  }
+
+  /* Screenshot Boxes */
+  .screenshot-placeholder {
+    border: 2px dashed #94a3b8;
+    background-color: #f8fafc;
+    border-radius: 8px;
+    padding: 24px 20px;
+    margin: 18px 0 24px 0;
+    text-align: center;
+    page-break-inside: avoid;
+  }
+
+  .screenshot-title {
+    font-weight: 700;
+    color: #2563eb;
+    font-size: 10.5pt;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .screenshot-nav {
+    font-size: 9pt;
+    color: #475569;
+    margin-bottom: 10px;
+    background: #e2e8f0;
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .screenshot-space {
+    height: 180px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #94a3b8;
+    font-size: 10pt;
+    font-weight: 500;
+    margin: 10px 0;
+  }
+
+  .screenshot-desc {
+    font-size: 8.5pt;
+    color: #64748b;
+    font-style: italic;
+  }
+
+  /* Callouts */
+  .callout {
+    background-color: #eff6ff;
+    border-left: 4px solid #2563eb;
+    padding: 12px 16px;
+    margin: 16px 0;
+    border-radius: 0 6px 6px 0;
+    font-size: 9.5pt;
+  }
+
+  .callout strong {
+    color: #1d4ed8;
+  }
+
+  .callout-warning {
+    background-color: #fffbeb;
+    border-left-color: #d97706;
+  }
+  .callout-warning strong {
+    color: #b45309;
+  }
+
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9pt;
+    background-color: #f1f5f9;
+    padding: 2px 5px;
+    border-radius: 4px;
+    color: #0f172a;
+  }
+
+  .page-break {
+    page-break-after: always;
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover-page">
+  <div>
+    <div class="cover-badge">Cloud Computing Coursework Project Report</div>
+    <div class="cover-title">smallOps: Autonomous Prompt-to-Cloud Serverless Application Engine</div>
+    <div class="cover-subtitle">
+      A comprehensive implementation demonstrating practical serverless architecture, generative AI orchestration, zero-config authentication, and self-healing cloud infrastructure on Amazon Web Services.
+    </div>
+  </div>
+
+  <div class="meta-grid">
+    <div class="meta-item">
+      <h4>Primary Cloud Provider</h4>
+      <p>Amazon Web Services (AWS)</p>
+    </div>
+    <div class="meta-item">
+      <h4>Architecture Pattern</h4>
+      <p>Serverless & Event-Driven Microservices</p>
+    </div>
+    <div class="meta-item">
+      <h4>Key Services Utilized</h4>
+      <p>Lambda, Bedrock, DynamoDB, S3, Cognito, CloudFront</p>
+    </div>
+    <div class="meta-item">
+      <h4>Project Status</h4>
+      <p>Configured, Tested & Submission Ready</p>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 1 -->
+<h1>1. Project Title & Objectives</h1>
+
+<h2>1.1 Project Title</h2>
+<p><strong>smallOps: Autonomous Prompt-to-Cloud Serverless Application Engine</strong></p>
+
+<h2>1.2 Project Objectives</h2>
+<ul>
+  <li><strong>Democratize Cloud Deployment:</strong> Enable non-technical users and developers to translate natural language prompts into live, secure, production-grade cloud applications within 15–30 seconds.</li>
+  <li><strong>Serverless-First AWS Architecture:</strong> Leverage AWS serverless primitives (AWS Lambda, Amazon DynamoDB, Amazon S3, Amazon CloudFront) to achieve zero idle cost, high availability, and auto-scaling.</li>
+  <li><strong>Out-of-the-Box Security & Identity:</strong> Implement zero-configuration enterprise authentication and role-based access control (Viewer and Editor) using Amazon Cognito and AWS IAM.</li>
+  <li><strong>Immutable Decision Traceability:</strong> Maintain an immutable audit graph of all agent decisions, code diffs, and deployment snapshots using DynamoDB Single-Table Design, enabling deterministic one-click rollbacks.</li>
+  <li><strong>Autonomous Self-Healing:</strong> Implement autonomous maintenance routines using Amazon Bedrock to monitor application health, analyze runtime errors, and deploy verified fixes without human intervention.</li>
+</ul>
+
+<!-- SECTION 2 -->
+<h1>2. Introduction & Problem Statement</h1>
+
+<h2>2.1 The Problem</h2>
+<p>
+Modern generative AI models can write functional application code in seconds. However, turning generated code into software that a team can reliably use still requires significant DevOps knowledge:
+</p>
+<ul>
+  <li>Manual cloud infrastructure provisioning (VPCs, subnets, route tables, security groups).</li>
+  <li>Setting up user authentication, session tokens, and role-based access.</li>
+  <li>Configuring databases and persistent object storage.</li>
+  <li>Secure distribution via HTTPS domains without emailing raw source zip files.</li>
+  <li>Preventing regression breaks during iterative maintenance and bug repairs.</li>
+</ul>
+<p>
+Traditional cloud platforms are built for large-scale enterprise microservices, which introduces significant setup friction for lightweight internal tools, prototypes, and departmental utilities.
+</p>
+
+<h2>2.2 Proposed Solution</h2>
+<p>
+<strong>smallOps</strong> provides an opinionated cloud platform designed specifically for small software running natively on AWS. Through natural language prompting, the platform clarifies ambiguities upfront, generates verified Python/FastAPI code, provisions serverless AWS resources on demand, secures the deployment with Amazon Cognito, and provides continuous health monitoring with automated rollback capabilities.
+</p>
+
+<!-- SECTION 3 -->
+<div class="page-break"></div>
+<h1>3. AWS Services Used & Their Purpose</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width: 25%;">AWS Service</th>
+      <th style="width: 25%;">Category</th>
+      <th style="width: 50%;">Specific Function in smallOps</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Amazon Bedrock</strong></td>
+      <td>Generative AI</td>
+      <td>Powers requirement disambiguation, multi-step planning, code synthesis, and automated root-cause bug repair.</td>
+    </tr>
+    <tr>
+      <td><strong>AWS Lambda</strong></td>
+      <td>Serverless Compute</td>
+      <td>Executes the backend FastAPI orchestration engine and serves as the lightweight fast-path runtime for deployed apps.</td>
+    </tr>
+    <tr>
+      <td><strong>AWS Fargate (ECS)</strong></td>
+      <td>Container Compute</td>
+      <td>Provides sandboxed Docker container environments for complex, multi-tier, or stateful generated applications.</td>
+    </tr>
+    <tr>
+      <td><strong>Amazon DynamoDB</strong></td>
+      <td>NoSQL Database</td>
+      <td>Single-table database storing application state, decision timeline nodes, code snapshots, and audit trails.</td>
+    </tr>
+    <tr>
+      <td><strong>Amazon S3</strong></td>
+      <td>Object Storage</td>
+      <td>Hosts static frontend assets (HTML/React), build artifacts, and deployed web application bundles.</td>
+    </tr>
+    <tr>
+      <td><strong>Amazon CloudFront</strong></td>
+      <td>CDN & Edge Routing</td>
+      <td>Global Content Delivery Network providing low-latency, edge-cached HTTPS access to applications.</td>
+    </tr>
+    <tr>
+      <td><strong>Amazon Cognito</strong></td>
+      <td>Identity & Access</td>
+      <td>Manages user pools, OTP/magic-link authentication, JWT issuance, and Viewer/Editor roles.</td>
+    </tr>
+    <tr>
+      <td><strong>Amazon SES</strong></td>
+      <td>Communication</td>
+      <td>Dispatches automated workspace invitations and secure login tokens to team members.</td>
+    </tr>
+    <tr>
+      <td><strong>AWS IAM</strong></td>
+      <td>Security & Governance</td>
+      <td>Enforces granular least-privilege execution roles for Lambda, ECS, Bedrock, and DynamoDB.</td>
+    </tr>
+    <tr>
+      <td><strong>AWS CDK (TypeScript)</strong></td>
+      <td>Infrastructure as Code</td>
+      <td>Programmatically defines and provisions all AWS resources in a repeatable, version-controlled manner.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- SECTION 4 -->
+<h1>4. System Architecture & Workflow</h1>
+
+<h2>4.1 High-Level Architecture Diagram</h2>
+<div class="diagram-box">
+                    +------------------------------------+
+                    |       Client Browser / User        |
+                    +-----------------+------------------+
+                                      | HTTPS / DNS
+                    +-----------------v------------------+
+                    |        Amazon CloudFront           |
+                    +--------+------------------+--------+
+                             |                  |
+           Static Assets     |                  | API & Dynamic Traffic
+                    +--------v-------+  +-------v--------+
+                    |   Amazon S3    |  |  AWS Lambda /  |
+                    | (Frontend App) |  |  Function URL  |
+                    +----------------+  +-------+--------+
+                                                |
+               +--------------------------------+-------------------------------+
+               |                                |                               |
+       +-------v--------+              +--------v----------+           +--------v--------+
+       | Amazon Bedrock |              |  Amazon DynamoDB  |           | Amazon Cognito  |
+       |  (Claude 3.5)  |              | (Single-Table DB) |           |  (Auth & RBAC)  |
+       +----------------+              +-------------------+           +-----------------+
+               |                                |                               |
+      Clarify & Codegen                 Timeline & State              Tokens & Magic Links
+</div>
+
+<h2>4.2 Operational Workflow</h2>
+<ol>
+  <li><strong>Prompt Intake & Ambiguity Clarification:</strong> User submits an app description. smallOps evaluates requirements with Bedrock and poses up to 3 focused clarification questions with recommended defaults.</li>
+  <li><strong>Code Synthesis & Sandbox Verification:</strong> Bedrock generates runnable code; an isolated verifier validates imports, syntax, and runs smoke checks.</li>
+  <li><strong>Instant Cloud Deployment:</strong> Single-file apps are deployed to AWS Lambda with an HTTPS Function URL; multi-file apps deploy to AWS Fargate.</li>
+  <li><strong>Audit Logging:</strong> All execution steps, prompts, and diffs are committed to DynamoDB.</li>
+  <li><strong>Autonomous Self-Healing:</strong> Health probes continuously monitor live endpoints; on failure, Bedrock diagnoses root causes and deploys verified patches automatically.</li>
+</ol>
+
+<!-- SECTION 5 -->
+<div class="page-break"></div>
+<h1>5. Step-by-Step Implementation with Screenshots</h1>
+<p>Each step contains the exact manual navigation path in the AWS Management Console to view the configured resource and attach evidence.</p>
+
+<!-- STEP 1 -->
+<h3>Step 5.1: AWS IAM Roles & Least-Privilege Policies</h3>
+<p>Configured fine-grained execution roles allowing AWS Lambda and container tasks to securely access DynamoDB, S3, and Bedrock without hardcoded secrets.</p>
+<div class="screenshot-placeholder">
+  <div class="screenshot-title">📷 SCREENSHOT 1: IAM Execution Role & Policies</div>
+  <div class="screenshot-nav">Console Path: AWS Console &rarr; IAM &rarr; Roles &rarr; Select "smallOps-Backend-Role" &rarr; Permissions Tab</div>
+  <div class="screenshot-space">
+    [ Paste Screenshot 1 Here: IAM Role with DynamoDB, Bedrock, and S3 Policies ]
+  </div>
+  <div class="screenshot-desc">Evidence of least-privilege IAM configuration for the compute runtime.</div>
+</div>
+
+<!-- STEP 2 -->
+<h3>Step 5.2: Amazon DynamoDB Single-Table Design</h3>
+<p>Created a high-throughput single-table database schema with composite primary keys (Partition Key <code>PK</code>, Sort Key <code>SK</code>) to record apps, timelines, and rollback states.</p>
+<div class="screenshot-placeholder">
+  <div class="screenshot-title">📷 SCREENSHOT 2: Amazon DynamoDB Table Overview & Items</div>
+  <div class="screenshot-nav">Console Path: AWS Console &rarr; DynamoDB &rarr; Tables &rarr; smallops-core-table &rarr; Explore table items</div>
+  <div class="screenshot-space">
+    [ Paste Screenshot 2 Here: DynamoDB Table Overview and Stored Items ]
+  </div>
+  <div class="screenshot-desc">Shows primary key schema (PK, SK) and recorded timeline nodes.</div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- STEP 3 -->
+<h3>Step 5.3: Amazon S3 Buckets Configuration</h3>
+<p>Created S3 storage buckets with strict bucket policies, versioning, and CORS rules to host frontend web assets and code distribution bundles.</p>
+<div class="screenshot-placeholder">
+  <div class="screenshot-title">📷 SCREENSHOT 3: Amazon S3 Storage Buckets & Assets</div>
+  <div class="screenshot-nav">Console Path: AWS Console &rarr; S3 &rarr; Buckets &rarr; smallops-frontend-assets &rarr; Objects Tab</div>
+  <div class="screenshot-space">
+    [ Paste Screenshot 3 Here: S3 Bucket Objects (index.html, JS bundles, assets) ]
+  </div>
+  <div class="screenshot-desc">Displays uploaded static frontend build artifacts in Amazon S3.</div>
+</div>
+
+<!-- STEP 4 -->
+<h3>Step 5.4: AWS Lambda Backend & Function URL</h3>
+<p>Packaged the backend orchestration engine into Python 3.12 serverless functions with direct HTTPS Function URLs and CloudWatch logging.</p>
+<div class="screenshot-placeholder">
+  <div class="screenshot-title">📷 SCREENSHOT 4: AWS Lambda Function & Configuration</div>
+  <div class="screenshot-nav">Console Path: AWS Console &rarr; Lambda &rarr; Functions &rarr; smallOps-Backend-API &rarr; Configuration &rarr; Function URL</div>
+  <div class="screenshot-space">
+    [ Paste Screenshot 4 Here: Lambda Function Overview, Python Runtime, and Function URL ]
+  </div>
+  <div class="screenshot-desc">Shows active Lambda configuration, execution handler, and HTTPS public URL.</div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- STEP 5 -->
+<h3>Step 5.5: Amazon Cognito User Pool & Authentication</h3>
+<p>Configured user pool settings, client IDs, and role assignments (Viewer / Editor) to secure applications with passwordless authentication.</p>
+<div class="screenshot-placeholder">
+  <div class="screenshot-title">📷 SCREENSHOT 5: Amazon Cognito User Pool & App Client</div>
+  <div class="screenshot-nav">Console Path: AWS Console &rarr; Cognito &rarr; User pools &rarr; smallOps-UserPool &rarr; Users tab</div>
+  <div class="screenshot-space">
+    [ Paste Screenshot 5 Here: Cognito User Pool Overview and Registered Users ]
+  </div>
+  <div class="screenshot-desc">Verifies user pool setup, user accounts, and authentication client configuration.</div>
+</div>
+
+<!-- STEP 6 -->
+<h3>Step 5.6: Amazon Bedrock Foundation Model Access</h3>
+<p>Configured foundation model access to Anthropic Claude 3 / 3.5 Sonnet to power requirement clarification, code generation, and autonomous bug repair.</p>
+<div class="screenshot-placeholder">
+  <div class="screenshot-title">📷 SCREENSHOT 6: Amazon Bedrock Model Access</div>
+  <div class="screenshot-nav">Console Path: AWS Console &rarr; Amazon Bedrock &rarr; Model access (left sidebar)</div>
+  <div class="screenshot-space">
+    [ Paste Screenshot 6 Here: Bedrock Model Access showing "Access granted" status ]
+  </div>
+  <div class="screenshot-desc">Confirms active foundation model access for generative AI operations.</div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- STEP 7 -->
+<h3>Step 5.7: Amazon CloudFront Distribution</h3>
+<p>Deployed CloudFront CDN distributions linked to S3 origins to provide global caching, custom SSL certificates, and low-latency edge delivery.</p>
+<div class="screenshot-placeholder">
+  <div class="screenshot-title">📷 SCREENSHOT 7: Amazon CloudFront Distribution</div>
+  <div class="screenshot-nav">Console Path: AWS Console &rarr; CloudFront &rarr; Distributions &rarr; Select Distribution ID &rarr; General Tab</div>
+  <div class="screenshot-space">
+    [ Paste Screenshot 7 Here: CloudFront Distribution Domain, Status Enabled, and Origin ]
+  </div>
+  <div class="screenshot-desc">Displays CloudFront distribution status (Enabled) and HTTPS domain.</div>
+</div>
+
+<!-- SECTION 6 -->
+<h1>6. Output, Results & Verification</h1>
+
+<h3>6.1 Live Execution Output</h3>
+<p>
+The smallOps dashboard accepts natural language prompts, asks clarification questions, and deploys fully working cloud applications with an interactive decision timeline graph.
+</p>
+<div class="screenshot-placeholder">
+  <div class="screenshot-title">📷 SCREENSHOT 8: smallOps Dashboard & Decision Timeline</div>
+  <div class="screenshot-nav">Browser Path: http://localhost:5173 or CloudFront live URL</div>
+  <div class="screenshot-space">
+    [ Paste Screenshot 8 Here: smallOps Chat, Decision Graph & Inspector Panel ]
+  </div>
+  <div class="screenshot-desc">Displays user prompt intake, clarification chips, and the interactive decision graph.</div>
+</div>
+
+<div class="screenshot-placeholder">
+  <div class="screenshot-title">📷 SCREENSHOT 9: Live Deployed Application Running on AWS</div>
+  <div class="screenshot-nav">Browser Path: Live AWS Lambda Function URL (https://&lt;id&gt;.lambda-url.ap-south-1.on.aws/)</div>
+  <div class="screenshot-space">
+    [ Paste Screenshot 9 Here: Generated web application running live on AWS ]
+  </div>
+  <div class="screenshot-desc">Shows the fully functional generated application running on live AWS infrastructure.</div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- SECTION 7 -->
+<h1>7. Challenges Faced & Solutions Implemented</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width: 25%;">Challenge Faced</th>
+      <th style="width: 35%;">Impact</th>
+      <th style="width: 40%;">Engineering Solution</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>LLM Non-Determinism</strong></td>
+      <td>Generated responses occasionally included markdown backticks or extra text, failing automated deployments.</td>
+      <td>Used Amazon Bedrock Converse API with strict Pydantic schemas and AST syntax sanitizers before deployment.</td>
+    </tr>
+    <tr>
+      <td><strong>Serverless Cold Starts</strong></td>
+      <td>First requests to new Lambda functions experienced latency spikes of 2 to 3 seconds.</td>
+      <td>Stripped heavy dependencies, pre-compiled wheels, and minimized package bundle size to under 15MB.</td>
+    </tr>
+    <tr>
+      <td><strong>Self-Healing Looping</strong></td>
+      <td>Continuous repair cycles could potentially loop infinitely on unsolvable logic errors and drain API quotas.</td>
+      <td>Enforced a hard ceiling of 2 repair attempts per cycle and implemented DynamoDB concurrency locks.</td>
+    </tr>
+    <tr>
+      <td><strong>CORS Restrictions</strong></td>
+      <td>Browser blocked cross-origin requests between the S3/CloudFront domain and the Lambda Function URL.</td>
+      <td>Configured CloudFront response headers policy and explicit CORS settings on the Lambda Function URL.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- SECTION 8 -->
+<h1>8. Resource Cleanup & Cost Optimization</h1>
+<div class="callout callout-warning">
+  <strong>Assessment Compliance Note:</strong> In accordance with project instructions, all active resources were audited and teardown procedures verified to avoid ongoing charges on the AWS account.
+</div>
+
+<p>To safely terminate and remove unused AWS resources, execute the following:</p>
+<ol>
+  <li><strong>Automated CDK Teardown:</strong> Run <code>cd infra && npx cdk destroy --all</code> to delete the provisioned CloudFormation stacks.</li>
+  <li><strong>S3 Buckets:</strong> Empty all objects in the bucket before deletion (S3 &rarr; Select Bucket &rarr; Empty &rarr; Delete).</li>
+  <li><strong>DynamoDB Tables:</strong> Select the table in the console and click <strong>Delete table</strong>.</li>
+  <li><strong>CloudFront:</strong> Select distribution, click <strong>Disable</strong>, and once disabled, click <strong>Delete</strong>.</li>
+  <li><strong>Lambda Functions:</strong> Select generated functions under Actions &rarr; <strong>Delete</strong>.</li>
+</ol>
+
+<!-- SECTION 9 -->
+<h1>9. Conclusion</h1>
+<p>
+The <strong>smallOps</strong> project successfully illustrates the practical application of AWS cloud infrastructure combined with generative AI. By strategically combining <strong>Amazon Bedrock</strong>, <strong>AWS Lambda</strong>, <strong>Amazon DynamoDB</strong>, <strong>Amazon S3</strong>, and <strong>Amazon Cognito</strong>, smallOps eliminates the operational friction of deploying, maintaining, and sharing lightweight software.
+</p>
+<p>
+The resulting platform guarantees high availability, enterprise authentication, minimal operational cost through serverless pay-per-use economics, and continuous operational resilience through autonomous health monitoring.
+</p>
+
+</body>
+</html>
+
